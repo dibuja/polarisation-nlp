@@ -1,0 +1,3 @@
+python==3.8.13
+pdfplumber==0.7.6
+pandas==1.4.2
