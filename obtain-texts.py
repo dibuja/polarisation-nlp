@@ -81,7 +81,7 @@ def text2dict(cleaned):
 
     # Split by topic excluding the titles of the topics (capitalized words starting with a hiphen, ending with the file number).
     splitted_by_topic = re.split(
-        '[—–\-A-Z /\\n\n,.\d?¿:;!¡ÑÇÁÉÍÓÚÜÀÈÌÒÙ)(]{30,1000}\([NúÚmMeErRoOdDxXpPiInNtT \n\\n]{21,26}([\d]{3}/[\d]{6})\).[\n\\n]{0,4}', cleaned)
+        '[—–\-A-Z /\\n\n,.\d?¿:;!¡ÑÇÁÉÍÓÚÜÀÈÌÒÙ)(]{30,1000}\([NúÚmMeErRoOdDxXpPiInNtT \n\\n]{21,26}([\d]{3}/[\d]{6})[\).]{0,2}[\n\\n]{0,4}', cleaned)
 
     # Remove the first item, which is always the summary of the session.
     splitted_by_topic.pop(0)
