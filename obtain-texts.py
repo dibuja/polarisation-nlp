@@ -12,6 +12,8 @@ import pdfplumber
 import requests
 import re
 from timeit import default_timer as timer
+import sys
+from pathlib import Path
 
 # Function to download a PDF file given an url and leave it in a temporary directory.
 def download_pdf(url):
@@ -156,7 +158,6 @@ def text2dict(cleaned):
     return dic
 
 def obtain_texts(data):
-    timestamp = datetime.datetime.now()
     texts = []
     previous_url = ''
 
@@ -186,9 +187,6 @@ def obtain_texts(data):
 
         # Making sure there are no duplicates in the interventions.
         if count > 1: print(f'A speaker appeared two times in row {row}')
-        if row % 10 == 0:
-            print(f'{row} time: {datetime.datetime.now() - timestamp}')
-            timestamp = datetime.datetime.now()
 
         texts.append(text)
 
@@ -197,14 +195,16 @@ def obtain_texts(data):
 def main():
     # Import data. In this case legislatures X to XIV.
 
-    assert len(sys.argv) == 2 'Usage: python obtain-texts.py [input file] [output file]'
+    assert len(sys.argv) == 3, 'Usage: python obtain-texts.py [input file] [output file]'
 
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
-    data = pd.read_csv(input_file, index_col=0)
+    data = pd.read_csv(input_file)
     texts = obtain_texts(data)
     data['text'] = texts
     data.to_csv(output_file)
 
     print('Succesfully extracted texts!')
+
+main()
