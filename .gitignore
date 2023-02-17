@@ -1,6 +1,8 @@
 # Folders
 data/interventions/
 tmp/
+data/sample.csv
+data/sample-texts.csv
 
 # Local notebook for testing.
 sandbox.ipynb
