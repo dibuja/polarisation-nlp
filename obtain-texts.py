@@ -85,6 +85,10 @@ def text2dict(cleaned):
     splitted_by_topic = re.split(
         '[—–\-A-Z /\\n\n,.\d?¿:;!¡ÑÇÁÉÍÓÚÜÀÈÌÒÙ)(]{30,1000}\([NúÚmMeErRoOdDxXpPiInNtT \n\\n]{21,26}([\d]{3}/[\d]{6})[\).]{0,2}[\n\\n]{0,4}', cleaned)
 
+    # TODO: the way the algorithm works does not account for situations in which there are several topics discussed at the same time. It could be adjusted
+    # to include those cases, but then the logic would change a lot since it would not be possible to use dictionaries.
+    # '[—–\-A-Z /\\n\n,.\d?¿:;!¡ÑÑÇÁÉÍÓÓÚÚÜÀÈÌÒÙ)(]{3,1000}\([NúúÚmMeErRoOdDxXpPiIntT \n\\n]{21,26}([\d]{3}/[\d]{6})\)[;\n.]{1,2}[\n\\n]{0,4}', cleaned)
+
     # Remove the first item, which is always the summary of the session.
     splitted_by_topic.pop(0)
 
@@ -163,7 +167,7 @@ def obtain_texts(data):
 
     for row in range(len(data)):
         # The speaker's surname, topic id and url of the intervention.
-        surname = data.loc[row]['orador'].split(',')[0]
+        surname = data.loc[row]['orador'].split(',')[0].lower()
         topic = data.loc[row]['numero_expediente'][0:10]
         url = data.loc[row]['enlace_pdf']
         legislatura = data.loc[row]['legislatura']
@@ -181,7 +185,7 @@ def obtain_texts(data):
 
         if topic in processed.keys():
             for item in processed[topic].keys():
-                if surname.lower() in item.lower():
+                if surname in item.lower():
                     text = processed[topic][item]
                     count += 1
 
@@ -203,7 +207,7 @@ def main():
     data = pd.read_csv(input_file)
     texts = obtain_texts(data)
     data['text'] = texts
-    data.to_csv(output_file)
+    data.to_csv(output_file, index=False)
 
     print('Succesfully extracted texts!')
 
