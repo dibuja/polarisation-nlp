@@ -175,7 +175,16 @@ def obtain_texts(data):
         if url != previous_url:
             # Perform all the necessary steps.
             download_pdf(url)
-            pdf_text = pdf2text(legislatura)
+        
+            try:
+                pdf_text = pdf2text(legislatura)
+            except:
+                # In case the PDF cannot be parsed, a log is printed, the next pdf url is downloaded
+                # and the text ends up being empty for that intervention.
+                pdf_text = ''
+                print(f'Error parsing PDF in row: {row}')
+                previous_url = ''
+
             cleaned = cleantext(pdf_text)
             processed = text2dict(cleaned)
             previous_url = url
