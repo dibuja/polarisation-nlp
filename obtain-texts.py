@@ -135,8 +135,11 @@ def text2dict(cleaned):
 
                 # If the end of the sentence is an empty string, then remove it.
                 li = len(dic[key][i]) - 1
-                if dic[key][i][li] == ' ':
-                    dic[key][i] = value[i][:li]
+                try:
+                    if dic[key][i][li] == ' ':
+                        dic[key][i] = value[i][:li]
+                except:
+                    print(f'IndexError: dic[{key}][{i}][{li}]')
 
     # Merging interventions by speaker for the same topic and turning them into a dict.
     # {topic} : {{speaker} : {text}}
