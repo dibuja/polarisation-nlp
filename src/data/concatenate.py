@@ -3,7 +3,7 @@ import glob
 import pandas as pd
 import sys
 
-assert len(sys.argv) == 3 'Usage: python concatenate.py [relative path]'\
+assert len(sys.argv) == 3, 'Usage: python concatenate.py [relative path]'\
                         ' [output file] [delimiter]'
 
 workdir = sys.argv[1] # e.g. 'by-legislature'
