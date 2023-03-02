@@ -33,6 +33,10 @@ def main():
     # Rename labels.
     df.columns = ['label', 'document']
 
+    # Remove NaNs and empty tokens.
+    df = df.loc[df['document'] != "['nan']"].reset_index(drop=True)
+    df = df.dropna().reset_index(drop=True)
+
     # Save to path.  
     df.to_csv(output_file, index=False)
 
