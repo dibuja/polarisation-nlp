@@ -14,16 +14,27 @@ import re
 from timeit import default_timer as timer
 import sys
 from pathlib import Path
+from time import sleep
 
 # Function to download a PDF file given an url and leave it in a temporary directory.
 def download_pdf(url):
     session_obj = requests.Session()
-    response = session_obj.get(url, headers={"User-Agent": "Mozilla/5.0"})
-    file = response.content
+
+    # Tries to download the PDF. If error, waits 2 seconds and tries again.
+    downloaded = False
+    while not downloaded:
+        try:
+            response = session_obj.get(url, headers={"User-Agent": "Mozilla/5.0"})
+            downloaded = True
+        except:
+            print('Error: PDF not downloaded')
+            sleep(2)
+
+    f = response.content
 
     # Putting the file in a temporary directory.
     filename = Path('./tmp/temp.pdf')
-    filename.write_bytes(file)
+    filename.write_bytes(f)
 
 def pdf2text(legislature):
     with pdfplumber.open('./tmp/temp.pdf') as pdf:
