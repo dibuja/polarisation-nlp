@@ -28,12 +28,13 @@ tok = ToktokTokenizer()
 # TODO: Evaluate if adding to the stopwords list the basque, galizan and catalan words that would give away specific political parties.
 # TODO: Evaluate if adding to the stopwords list the name of the political parties themselves: populares, popular, socialista, ciudadanos, podemos, etc.
 
-procedural = ['diputado', 'dipuptada', 'diputados', 'diputadas', 'gobierno', 'gobiernos', 'oposición', 'exministro', 'ministro', 
+procedural = ['diputado', 'diputada', 'diputados', 'diputadas', 'gobierno', 'gobiernos', 'oposición', 'exministro', 'ministro', 
               'ministra', 'ministros', 'ministras', 'parlamento', 'parlamentario', 'congreso', 'pregunta', 'preguntar', 'ley', 
               'leyes', 'decreto', 'decreto-ley', 'partido', 'partidos', 'grupo', 'señoras', 'señor', 'señora', 'señores', 'señoría', 
               'señorías', 'voto', 'votar', 'decoro', 'cámara', 'presidente', 'presidenta', 'vicepresidente', 'vicepresidenta', 
               'vicepresidentes', 'vicepresidentas', 'proposición', 'proposiciones', 'proyecto', 'no-ley', 'favor', 'gracias', 
-              'enmienda', 'enmiendas', 'moción', 'mociones', 'interpelación', 'interpelaciones', 'aplausos', 'usted', 'ustedes']
+              'enmienda', 'enmiendas', 'moción', 'mociones', 'interpelación', 'interpelaciones', 'aplausos', 'usted', 'ustedes',
+              'portavoz', 'portavoces', 'alusión', 'alusiones', 'comisión', 'comisiones']
 
 other_stopwords = ['ahora', 'además', 'aquí', 'allí', 'solo', 'sólo', 'sino', 'hoy', 'así', 'ejemplo']
 
@@ -81,13 +82,13 @@ def main():
     corpus = dataframe['text'].to_list()
 
     # Clean the list.
-    clean_corpus = [clean(t) for t in corpus]
+    clean_corpus = [clean(str(t)) for t in corpus]
 
     # Create new column with clean tokens.
     dataframe['clean_text'] = clean_corpus
 
     # Save to output file.
-    data.to_csv(output_file, index=False)
+    dataframe.to_csv(output_file, index=False)
 
     print(f'Succesfully cleaned and tokenized all texts. Results in {output_file}.')
 
