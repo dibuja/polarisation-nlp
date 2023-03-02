@@ -11,13 +11,14 @@ Usage: $python3 reduce-dimension.py [input file] [output file] [pca/tsne]
 - pca/tsne: method to reduce dimensionality.
 '''
 
+import sys
 import gensim
 import pandas as pd
 import numpy as np
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 
-def reduce_dimension(model):
+def reduce_dimension(model, method):
     
     labels = model.dv.index_to_key
     L = len(labels)
@@ -38,7 +39,7 @@ def reduce_dimension(model):
     Z = dr.fit_transform(z)
 
     Z = pd.DataFrame(Z)
-    z.columns = ['dim1', 'dim2']
+    Z.columns = ['dim1', 'dim2']
     Z['label'] = labels
 
     return Z
@@ -48,21 +49,21 @@ def get_color(Z):
     col = []
 
     for i in range(len(labels)):
-        if '(GVOX)' in labels[i]:
+        if 'GVOX' in labels[i]:
             col.append('#82b431')
-        elif '(GS)' in labels[i]:
+        elif 'GS' in labels[i]:
             col.append('#c10200')
-        elif '(GCs)' in labels[i]:
+        elif 'GCs' in labels[i]:
             col.append('#f87729')
-        elif '(GP)' in labels[i]:
+        elif 'GP' in labels[i]:
             col.append('#1eb3e6')
-        elif '(GCUP-EC-GC)' in labels[i]:
+        elif 'GCUP-EC-GC' in labels[i]:
             col.append('#a245b2')
-        elif '(GR)' in labels[i]:
+        elif 'GR' in labels[i]:
             col.append('#f99f00')
-        elif '(GV (EAJ-PNV))' in labels[i]:
+        elif 'GV (EAJ-PNV)' in labels[i]:
             col.append('#008146')
-        elif '(GEH Bildu)' in labels[i]:
+        elif 'GEH Bildu' in labels[i]:
             col.append('#bbce00')
         else:
             col.append('#000000')

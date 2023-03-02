@@ -17,6 +17,7 @@ import gensim
 import multiprocessing
 import logging
 import pandas as pd
+import sys
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
