@@ -10,8 +10,8 @@ Script to clean and tokenize the texts from the parliamentary interventions. The
 
 Usage: $python3 clean-tokenize.py [input file] [output file]
 
-- input file: pandas dataframe with a column called «text» containing the documents to clean and tokenize.
-- output file: the script returns a copy of the dataframe containing an additional column called «clean_text» with the list of tokens.
+- input file: .csv file containing a dataframe with a column called «text» containing the documents to clean and tokenize.
+- output file: the script returns a copy of the dataframe as .csv containing an additional column called «clean_text» with the list of tokens.
 '''
 
 import pandas as pd
