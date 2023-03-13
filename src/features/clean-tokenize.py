@@ -24,19 +24,20 @@ import sys
 
 tok = ToktokTokenizer()
 
-# TODO: Evaluate if adding to the stowprds list: españa, españoles, españolas, presupuesto, presupuestos, medida, medidas, política, etc.
-# TODO: Evaluate if adding to the stopwords list the basque, galizan and catalan words that would give away specific political parties.
-# TODO: Evaluate if adding to the stopwords list the name of the political parties themselves: populares, popular, socialista, ciudadanos, podemos, etc.
-
 procedural = ['diputado', 'diputada', 'diputados', 'diputadas', 'gobierno', 'gobiernos', 'oposición', 'exministro', 'ministro', 
               'ministra', 'ministros', 'ministras', 'parlamento', 'parlamentario', 'congreso', 'pregunta', 'preguntar', 'ley', 
               'leyes', 'decreto', 'decreto-ley', 'partido', 'partidos', 'grupo', 'señoras', 'señor', 'señora', 'señores', 'señoría', 
               'señorías', 'voto', 'votar', 'decoro', 'cámara', 'presidente', 'presidenta', 'vicepresidente', 'vicepresidenta', 
               'vicepresidentes', 'vicepresidentas', 'proposición', 'proposiciones', 'proyecto', 'no-ley', 'favor', 'gracias', 
               'enmienda', 'enmiendas', 'moción', 'mociones', 'interpelación', 'interpelaciones', 'aplausos', 'usted', 'ustedes',
-              'portavoz', 'portavoces', 'alusión', 'alusiones', 'comisión', 'comisiones']
+              'portavoz', 'portavoces', 'alusión', 'alusiones', 'comisión', 'comisiones', 'presupuesto', 'presupuestos', 'medida',
+              'medidas', 'política', 'políticas']
 
-other_stopwords = ['ahora', 'además', 'aquí', 'allí', 'solo', 'sólo', 'sino', 'hoy', 'así', 'ejemplo']
+other_stopwords = ['socialista', 'socialistas', 'popular', 'populares', 'ciudadanos', 'podemos', 'moitas', 'grazas', 'obrigado',
+                   'egun', 'eskerrik', 'asko', 'moltes', 'gràcies', 'bon', 'día', 'buenos', 'días', 'ahora', 'además', 'aquí', 'allí',
+                   'solo', 'sólo', 'sino', 'hoy', 'así', 'ejemplo', 'tan', 'senyor', 'senyora', 'toda', 'hecho', 'hacer', 'esquerra'
+                   'bildu', 'pnv', 'psoe', 'pp', 'vox', 'hace', 'decir', 'dice', 'dijo', 'dicho', 'boas', 'tardes', 'bona', 'tarda',
+                   'arratsalde', 'buenas']
 
 def clean(text: list) -> list:
     # Removing \n, \t, \r.
@@ -61,8 +62,11 @@ def clean(text: list) -> list:
     # Tokenizing.
     tokens = tok.tokenize(text)
 
+    with open('../spanish.txt') as f:
+        spanish_stopwords = f.readlines()
+
     # Stopwords + procedural words from the Spanish Parliament.
-    stopwords = nltk.corpus.stopwords.words('spanish') + procedural + other_stopwords
+    stopwords = nltk.corpus.stopwords.words('spanish') + procedural + other_stopwords + spanish_stopwords
 
     # Removing stop words, procedural words, short words and numbers.
     tokens = [w for w in tokens if w not in stopwords and len(w) > 2 and w != ' ' and not w.isdigit()]
