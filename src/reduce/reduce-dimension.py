@@ -88,6 +88,6 @@ def main():
     Z = reduce_dimension(model, method)
     Z = get_color(Z)
 
-    Z.to_csv(output_file)
+    Z.to_csv(output_file, index=False)
 
 main()
