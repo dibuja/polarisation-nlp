@@ -81,8 +81,8 @@ def cleantext(text):
     text = text.replace('  ', ' ')
 
     # Eliminate hyphens that separate two paragraphs.
-    regex = "[a-zA-ZñáéíóúüàèìòùçÑÁÉÍÓÚÜÀÈÌÒÙÇ](\-\n)"
-    text = re.sub(regex, '', text)
+    # regex = r"([a-zA-ZñáéíóúüàèìòùçÑÁÉÍÓÚÜÀÈÌÒÙÇ])(\-\n)"
+    # text = re.sub(regex, '\0', text) # I think this should be fixed but not sure.
     
     return text
 
