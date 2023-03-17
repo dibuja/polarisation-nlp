@@ -4,8 +4,12 @@ data/final
 tmp/
 data/sample.csv
 data/sample-texts.csv
+models/
 
 # Local notebook for testing.
 sandbox.ipynb
 
+# Others.
+*egg-info
 .DS_Store
+*__pycache__*
