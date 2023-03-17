@@ -111,7 +111,7 @@ def clean(text: str, lemmatise: bool = False) -> list:
     return tokens
 
 def main():
-    assert len(sys.argv) == 4, 'Usage: python clean-tokenize.py [input file] \ [lemmatised (true/false)] [output file]'
+    assert len(sys.argv) == 4, 'Usage: python clean-tokenize.py [input file] [lemmatised (true/false)] [output file]'
 
     input_file = sys.argv[1]
     lemmatise = sys.argv[2]

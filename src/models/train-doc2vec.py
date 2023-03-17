@@ -37,12 +37,12 @@ def train(train_corpus):
         dm_mean = 1,
         dbow_words= 0,
         vector_size = 200,
-        window = 10,
-        min_count = 50,
+        window = 10, # +- 10 words for the window size.
+        min_count = 50, # Only include tokens that with a minimum count of 50 occurrences.
         workers = cores,
         epochs = 10,
         hs = 0,
-        alpha = 0.001
+        alpha = 0.025 # learning rate.
     )
 
     # Build the model vocabulary with the corpus.
