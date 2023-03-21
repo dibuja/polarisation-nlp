@@ -60,7 +60,10 @@ def clean(text: str, lemmatise: bool = False) -> list:
 
     # Turning splitted words into 1, e.g. con-\ngreso to congreso.
     regex = r"([a-zA-ZñáéíóúüàèìòùçÑÁÉÍÓÚÜÀÈÌÒÙÇ])(\-\n)"
-    text = re.sub(regex, '\1', text)
+    text = re.sub(regex, r'\1', text)
+
+    regex = r"([a-zA-ZñáéíóúüàèìòùçÑÁÉÍÓÚÜÀÈÌÒÙÇ])(\- )"
+    text = re.sub(regex, r'\1', text)
 
     # Removing \n, \t, \r.
     text = text.replace('\t', ' ').replace('\n', ' ').replace('\r', ' ')
@@ -128,7 +131,11 @@ def main():
     corpus = dataframe['text'].to_list()
 
     # Clean the list. # TODO: is this causing the problem with lists as strings?
-    clean_corpus = [clean((t), lemmatise) for t in corpus]
+    clean_corpus = []
+    for i in range(len(corpus)):
+        clean_corpus.append(clean(corpus[i], lemmatise))
+        if i % 500 == 0:
+            print(f'Row cleaned: {i}. Result: {clean_corpus[i][0:79]}')
 
     # Create new column with clean tokens.
     print('Corpus cleaned.')
@@ -144,7 +151,7 @@ def main():
     def get_phrases(x):
         return trigram_mod[bigram_mod[x]]
 
-    dataframe['phrases'] = dataframe['clean_text'].loc[0:100].apply(get_phrases)
+    dataframe['phrases'] = dataframe['clean_text'].apply(get_phrases)
     print('Bigrams and Trigrams created.')
 
     # Re-sort by date.
