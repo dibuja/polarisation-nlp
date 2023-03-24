@@ -15,9 +15,10 @@ from timeit import default_timer as timer
 import sys
 from pathlib import Path
 from time import sleep
+from datetime import datetime
 
 # Function to download a PDF file given an url and leave it in a temporary directory.
-def download_pdf(url):
+def download_pdf(url, path='./tmp/temp.pdf'):
     session_obj = requests.Session()
 
     # Tries to download the PDF. If error, waits 2 seconds and tries again.
@@ -33,14 +34,16 @@ def download_pdf(url):
     f = response.content
 
     # Putting the file in a temporary directory.
-    filename = Path('./tmp/temp.pdf')
+    filename = Path(path)
     filename.write_bytes(f)
 
-def pdf2text(legislature):
-    with pdfplumber.open('./tmp/temp.pdf') as pdf:
+
+def pdf2text(legislature, date, path='./tmp/temp.pdf'):
+    with pdfplumber.open(path) as pdf:
         text = "" # Temporary string where all text goes.
         tp = len(pdf.pages) # Total number of pages.
         start = timer()
+        date = datetime.strptime(date, '%Y-%m-%d')
 
         if legislature > 10:
             for i in range(tp):
@@ -53,8 +56,8 @@ def pdf2text(legislature):
                 
                 text += new_text
 
-        elif legislature > 5 & legislature < 10:
-            for i in range(tp):
+        elif legislature > 6 and legislature < 10:
+            for i in range(tp-1):
                 page = pdf.pages[i]
                 # Crop the area of the page corresponding to the text itself.
                 left_half = page.crop((0, 0.08 * float(page.height), 0.5 * float(page.width), 0.93 * float(page.height)))
@@ -65,8 +68,36 @@ def pdf2text(legislature):
                 new_text += right_half.extract_text() + '\n'
                 text += new_text
 
+        elif legislature == 10:
+            # The change happened on pause between periodos de sesiones in the summmer of 2012.
+            if date > datetime.strptime('2012-08-01', '%Y-%m-%d'):
+                # The new format applies.
+                for i in range(tp):
+                    page = pdf.pages[i]
+                    # Crop the area of the page corresponding to the text itself.
+                    page = page.crop((0, 0.12 * float(page.height), 0.90 * float(page.width), 0.93 * float(page.height)))
+
+                    # Extract the text from the selected area.
+                    new_text = page.extract_text() + '\n'
+
+                    text += new_text
+
+            else:
+                # The old format applies.
+                for i in range(tp-1):
+                    print(f'total number of pages: {tp}')
+                    page = pdf.pages[i]
+                    # Crop the area of the page corresponding to the text itself.
+                    left_half = page.crop((0, 0.08 * float(page.height), 0.5 * float(page.width), 0.93 * float(page.height)))
+                    right_half = page.crop((0.50 * float(page.width), 0.08 * float(page.height), 0.95 * float(page.width), 0.93 * float(page.height)))
+
+                    # Extract the text from the selected area.
+                    new_text = left_half.extract_text() + '\n'
+                    new_text += right_half.extract_text() + '\n'
+                    text += new_text
+        
         else:
-            print('Warning: Invalid legislature. The code does not support PDF scrapping for legislatures 1 until 5.')
+            print('Warning: Invalid legislature. The code only supports scrapping form legislature 7 onwards.')
 
     end = timer()
     print(f'Time for PDF2Text extract_text(): {end - start} seconds')
@@ -184,14 +215,15 @@ def obtain_texts(data):
         surname = data.loc[row]['orador'].split(',')[0].lower()
         topic = data.loc[row]['numero_expediente'][0:10]
         url = data.loc[row]['enlace_pdf']
-        legislatura = data.loc[row]['legislatura']
+        legislature = data.loc[row]['legislatura']
+        date = data.loc[row]['fecha']
 
         if url != previous_url:
             # Perform all the necessary steps.
             download_pdf(url)
         
             try:
-                pdf_text = pdf2text(legislatura)
+                pdf_text = pdf2text(legislature, date)
             except:
                 # In case the PDF cannot be parsed, a log is printed, the next pdf url is downloaded
                 # and the text ends up being empty for that intervention.
@@ -219,8 +251,9 @@ def obtain_texts(data):
 
     return texts
 
-def main():
-    # Import data. In this case legislatures X to XIV.
+
+if __name__ == '__main__':
+    # Import data.
 
     assert len(sys.argv) == 3, 'Usage: python obtain-texts.py [input file] [output file]'
 
@@ -233,5 +266,3 @@ def main():
     data.to_csv(output_file, index=False)
 
     print('Succesfully extracted texts!')
-
-main()
