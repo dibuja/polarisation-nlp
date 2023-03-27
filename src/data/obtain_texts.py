@@ -85,7 +85,6 @@ def pdf2text(legislature, date, path='./tmp/temp.pdf'):
             else:
                 # The old format applies.
                 for i in range(tp-1):
-                    print(f'total number of pages: {tp}')
                     page = pdf.pages[i]
                     # Crop the area of the page corresponding to the text itself.
                     left_half = page.crop((0, 0.08 * float(page.height), 0.5 * float(page.width), 0.93 * float(page.height)))
