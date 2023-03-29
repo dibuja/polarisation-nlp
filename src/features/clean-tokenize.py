@@ -28,7 +28,7 @@ import re
 tok = ToktokTokenizer()
 
 # Creating stopwords list.
-procedural = ['muchas','diputado', 'diputada', 'diputados', 'diputadas', 'gobierno', 'gobiernos', 'oposición', 'exministro', 'ministro',
+procedural = ['muchas', 'diputado', 'diputada', 'diputados', 'diputadas', 'gobierno', 'gobiernos', 'oposición', 'exministro', 'ministro',
               'ministra', 'ministros', 'ministras', 'parlamento', 'parlamentario', 'congreso', 'pregunta', 'preguntar', 'ley',
               'leyes', 'decreto', 'decreto-ley', 'partido', 'partidos', 'grupo', 'señoras', 'señor', 'señora', 'señores', 'señoría',
               'señorías', 'voto', 'votar', 'decoro', 'cámara', 'presidente', 'presidenta', 'vicepresidente', 'vicepresidenta',
@@ -36,7 +36,7 @@ procedural = ['muchas','diputado', 'diputada', 'diputados', 'diputadas', 'gobier
               'enmienda', 'enmiendas', 'moción', 'mociones', 'interpelación', 'interpelaciones', 'aplausos', 'usted', 'ustedes',
               'portavoz', 'portavoces', 'alusión', 'alusiones', 'comisión', 'comisiones', 'presupuesto', 'presupuestos', 'medida',
               'medidas', 'política', 'políticas', 'propuesta', 'propuestas', 'tribuna', 'pnl', 'regulación', 'herria', 'junts',
-              'disposición', 'disposiciones', 'iniciativa']
+              'disposición', 'disposiciones', 'iniciativa', 'número_expediente', 'pronuncia_palabras_perciben', 'aplausos', 'diario_sesiones']
 
 # Mainly references to other parties or words in Galizan, Euskera or Català/Valencià, which are used by specific political parties.
 other_stopwords = ['socialista', 'socialistas', 'popular', 'populares', 'ciudadanos', 'podemos', 'moitas', 'grazas', 'obrigado',
@@ -44,7 +44,7 @@ other_stopwords = ['socialista', 'socialistas', 'popular', 'populares', 'ciudada
                    'solo', 'sólo', 'sino', 'hoy', 'así', 'ejemplo', 'tan', 'senyor', 'senyora', 'toda', 'hecho', 'hacer', 'esquerra'
                    'bildu', 'pnv', 'psoe', 'pp', 'vox', 'hace', 'decir', 'dice', 'dijo', 'dicho', 'boas', 'tardes', 'bona', 'tarda',
                    'arratsalde', 'buenas', 'ciu', 'erc', 'iu', 'haber', 'convergència', 'pdecat', 'convergencia', 'verds', 'real', 'unió',
-                   'confederal', 'comú', 'podem', 'marea', 'ciu', 'per']
+                   'confederal', 'comú', 'podem', 'marea', 'ciu', 'per', 'upyd', 'unión_progreso_democracia', 'izquierda_unida', 'izquierda_plural']
 
 stopwords = nltk.corpus.stopwords.words('spanish')
 
