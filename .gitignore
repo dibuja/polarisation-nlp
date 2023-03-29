@@ -13,3 +13,4 @@ sandbox.ipynb
 *egg-info
 .DS_Store
 *__pycache__*
+*.icloud
