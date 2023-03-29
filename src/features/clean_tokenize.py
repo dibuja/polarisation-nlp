@@ -44,7 +44,7 @@ other_stopwords = ['socialista', 'socialistas', 'popular', 'populares', 'ciudada
                    'solo', 'sólo', 'sino', 'hoy', 'así', 'ejemplo', 'tan', 'senyor', 'senyora', 'toda', 'hecho', 'hacer', 'esquerra'
                    'bildu', 'pnv', 'psoe', 'pp', 'vox', 'hace', 'decir', 'dice', 'dijo', 'dicho', 'boas', 'tardes', 'bona', 'tarda',
                    'arratsalde', 'buenas', 'ciu', 'erc', 'iu', 'haber', 'convergència', 'pdecat', 'convergencia', 'verds', 'real', 'unió',
-                   'confederal', 'comú', 'podem', 'marea', 'ciu', 'per', 'upyd', 'unión_progreso_democracia', 'izquierda_unida', 'izquierda_plural']
+                   'confederal', 'comú', 'podem', 'marea', 'per', 'upyd', 'unión_progreso_democracia', 'izquierda_unida', 'izquierda_plural']
 
 stopwords = nltk.corpus.stopwords.words('spanish')
 
