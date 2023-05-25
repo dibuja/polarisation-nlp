@@ -1,4 +1,4 @@
-# MSc Thesis — Analysing Political Polarisation using Natural Language Processing
+# Analysing Political Polarisation using Natural Language Processing
 
 This thesis analyses the levels of political polarisation in the Spanish parliament for years 2000 until 2023 using text data obtained from parliamentary speeches. Specifically, this thesis tackles both the affective and ideological aspects of political elite polarisation. For that purpose, a literature review was performed, identifying the current state-of-the-art in terms of polarisation analysis in Spain and internationally, and a dataset was harvested from the parliamentary records and pre-processed utilising several techniques.
 
