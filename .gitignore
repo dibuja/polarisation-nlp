@@ -1,7 +1,11 @@
 # Folders
 tmp/
-data/
-models/
+data/interim
+data/final
+data/raw
+data/*csv
+models/discarded
+
 
 # Local notebook for testing.
 sandbox.ipynb
