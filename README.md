@@ -24,16 +24,4 @@ For that purpose, we are:
 - [x] Pre-processing it to remove any irrelevant elements;  
 - [x] Analysing topic occurrence;  
 - [x] Analysing ideological polarisation using document embeddings;  
-- [x] Analysing affective polarisation using VADER & Transformers;  
-- [x] Test and optimise the usage of these models;
-
-
-## Results
-
-The thesis document can be found here: (…)
-Articles associated with the project are: (…)
-
-
-
-## Citation
-If you use this codebase, or otherwise found my work valuable, please cite (…)
+- [x] Analysing affective polarisation using VADER & Transformers.
