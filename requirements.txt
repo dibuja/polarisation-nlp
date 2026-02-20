@@ -3,4 +3,4 @@ pandas>=1.4.1
 requests==2.31.0
 spacy==3.5.0
 gensim==4.1.2
-nltk==3.7
+nltk==3.9.2
